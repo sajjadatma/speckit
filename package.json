@@ -1,0 +1,28 @@
+{
+  "name": "platform-foundation",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.11.0",
+  "engines": {
+    "node": ">=24.21.0 <25",
+    "pnpm": "11.11.0"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter ./apps/api --filter ./apps/web run dev",
+    "typecheck": "pnpm --filter ./apps/api run typecheck && pnpm --filter ./apps/web run typecheck && pnpm --filter ./packages/api-client run typecheck",
+    "check:boundaries": "node scripts/check-boundaries.mjs",
+    "lint": "eslint --config packages/eslint-config/index.mjs --no-error-on-unmatched-pattern 'scripts/**/*.mjs' && pnpm --filter ./apps/api run lint && pnpm --filter ./apps/web run lint",
+    "format:check": "prettier --check 'apps/**/*.{ts,tsx,js,mjs,json,css,yaml,yml,md}' 'packages/**/*.{ts,tsx,js,mjs,json,css,yaml,yml}' 'scripts/**/*.{js,mjs,cjs}' '.github/**/*.{yml,yaml}' package.json prettier.config.mjs pnpm-workspace.yaml README.md compose.yaml 'docs/**/*.md' specs/001-platform-foundation/quickstart.md",
+    "test": "pnpm --filter ./apps/api run test && pnpm --filter ./apps/web run test",
+    "test:quality": "node scripts/test-quality-gates.mjs",
+    "test:e2e": "pnpm --filter ./apps/web run test:e2e",
+    "contract:check": "pnpm --filter ./apps/api run contract:check",
+    "db:check": "pnpm --filter ./apps/api run db:check",
+    "build": "pnpm --filter ./apps/api run build && pnpm --filter ./apps/web run build"
+  },
+  "devDependencies": {
+    "eslint": "9.39.1",
+    "prettier": "3.8.2",
+    "typescript": "6.0.3"
+  }
+}

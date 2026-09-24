@@ -1,0 +1,6 @@
+apps/web/next-env.d.ts
+
+# Upstream starter artifact kept byte-for-byte as provided; the approved
+# constitution lives at .specify/memory/constitution.md.
+docs/starter_constitution_v1.0.0.md
+

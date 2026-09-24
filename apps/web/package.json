@@ -1,0 +1,32 @@
+{
+  "name": "@platform/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "start": "next start",
+    "build": "next build",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "lint": "eslint --config ../../packages/eslint-config/index.mjs --no-error-on-unmatched-pattern \"src/**/*.{ts,tsx}\" \"tests/**/*.{ts,tsx}\"",
+    "test": "node --test tests/*.spec.ts",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@platform/api-client": "workspace:*",
+    "next": "16.3.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "tailwindcss": "4.3.3",
+    "zod": "4.6.5",
+    "zustand": "5.0.15"
+  },
+  "devDependencies": {
+    "@platform/eslint-config": "workspace:*",
+    "@platform/tsconfig": "workspace:*",
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.10.0",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "typescript": "6.0.3"
+  }
+}

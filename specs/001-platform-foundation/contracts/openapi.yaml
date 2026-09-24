@@ -1,0 +1,181 @@
+openapi: 3.0.3
+info:
+  title: Platform Foundation API (design contract)
+  version: 0.1.0
+  description: >-
+    Design target for feature 001. Actual OpenAPI is exported from NestJS and
+    compared to this target; it is not independently maintained as runtime truth.
+    The generated OpenAPI artifact is available in all builds. Interactive
+    /api/docs and HTTP /api/openapi.json are development-only and MUST return
+    404 in production; neither is an application operation in this contract.
+servers:
+  - url: http://localhost:3001
+paths:
+  /api/v1/status:
+    get:
+      operationId: getFoundationStatus
+      summary: Neutral application status for baseline API integration
+      description: Explicitly public. No credentials or business data.
+      parameters:
+        - name: format
+          in: query
+          required: false
+          description: The only supported representation; defaults to summary.
+          schema:
+            type: string
+            enum: [summary]
+            default: summary
+      responses:
+        '200':
+          description: Baseline operation succeeded
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /health/live:
+    get:
+      operationId: getLiveness
+      summary: Process liveness, independent of database connectivity
+      description: Explicitly public; does not reveal configuration.
+      responses:
+        '200':
+          description: Process is serving HTTP
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Liveness'
+  /health/ready:
+    get:
+      operationId: getReadiness
+      summary: Readiness including a real database connectivity check
+      description: Explicitly public; never reveals connection details.
+      responses:
+        '200':
+          description: Ready to serve dependent requests
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Readiness'
+        '503':
+          description: Required database is unavailable
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Readiness'
+components:
+  headers:
+    RequestId:
+      description: Server-generated correlation identifier for the handled request.
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    StatusSuccess:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data:
+          type: object
+          required: [status]
+          additionalProperties: false
+          properties:
+            status:
+              type: string
+              enum: [operational]
+    Liveness:
+      type: object
+      required: [status, requestId]
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum: [live]
+        requestId:
+          type: string
+          format: uuid
+    Readiness:
+      type: object
+      required: [status, database, requestId]
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum: [ready, not_ready]
+        database:
+          type: string
+          enum: [up, down]
+        requestId:
+          type: string
+          format: uuid
+      description: HTTP 200 iff status=ready and database=up; otherwise HTTP 503.
+    Error:
+      type: object
+      required: [error, requestId]
+      additionalProperties: false
+      properties:
+        error:
+          type: object
+          required: [code, category, message]
+          additionalProperties: false
+          properties:
+            code:
+              type: string
+              description: Stable machine-readable code, e.g. VALIDATION_FAILED or INTERNAL_ERROR.
+            category:
+              type: string
+              enum: [application, validation, service, unexpected]
+            message:
+              type: string
+              description: Safe display message; never a stack trace or raw internal exception.
+            details:
+              type: array
+              maxItems: 20
+              description: Optional safe field identifiers and validation codes, not raw values.
+              items:
+                type: object
+                required: [field, code]
+                additionalProperties: false
+                properties:
+                  field:
+                    type: string
+                  code:
+                    type: string
+        requestId:
+          type: string
+          format: uuid
+  responses:
+    ValidationError:
+      description: Invalid request input; error.category=validation and error.code=VALIDATION_FAILED.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalError:
+      description: Unexpected internal failure; error.category=unexpected and error.code=INTERNAL_ERROR.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

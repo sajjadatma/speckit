@@ -1,0 +1,20 @@
+# Dependencies and package-manager state
+node_modules/
+.pnpm-store/
+
+# Build, test, and tool output
+dist/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+
+# Environment and OS artifacts
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+.git/

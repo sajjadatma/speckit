@@ -1,0 +1,20 @@
+{
+  "//": "exactOptionalPropertyTypes is disabled app-wide only because the machine-owned, drift-gated generated API client transport (packages/api-client/src/generated) is not clean under it; all other shared strict options stay on. See docs/architecture.md.",
+  "extends": "@platform/tsconfig/base.json",
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": false,
+    "lib": ["DOM", "DOM.Iterable", "ES2024"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "jsx": "preserve",
+    "noEmit": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
+  "exclude": ["node_modules"]
+}

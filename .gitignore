@@ -1,0 +1,26 @@
+# Dependencies and package-manager state
+node_modules/
+.pnpm-store/
+
+# Build, test, and tool output
+dist/
+coverage/
+.next/
+out/
+playwright-report/
+test-results/
+*.tsbuildinfo
+apps/api/src/generated/prisma/
+
+# Environment files (examples remain versioned)
+.env
+.env.*
+!.env.example
+
+# OS and editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
