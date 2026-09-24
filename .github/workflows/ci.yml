@@ -28,10 +28,12 @@ jobs:
       TMPDIR: /tmp
     steps:
       - uses: actions/checkout@v4
+      # Node is installed first, without a pnpm cache: setup-node cannot resolve a pnpm
+      # store path before pnpm exists, and the runner's preinstalled Node provides the
+      # corepack shim used to enable the exact pinned pnpm version below.
       - uses: actions/setup-node@v4
         with:
           node-version: 24.21.0
-          cache: pnpm
       - name: Enable pinned pnpm
         run: |
           corepack enable
