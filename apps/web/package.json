@@ -6,7 +6,7 @@
     "dev": "next dev",
     "start": "next start",
     "build": "next build",
-    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "typecheck": "next typegen && tsc --noEmit --project tsconfig.json",
     "lint": "eslint --config ../../packages/eslint-config/index.mjs --no-error-on-unmatched-pattern \"src/**/*.{ts,tsx}\" \"tests/**/*.{ts,tsx}\"",
     "test": "node --test tests/*.spec.ts",
     "test:e2e": "playwright test"
