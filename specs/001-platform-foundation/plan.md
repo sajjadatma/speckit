@@ -1,7 +1,7 @@
 # Implementation Plan: 001 Platform Foundation
 
-**Branch**: No Git repository is initialized | **Date**: 2026-09-24 | **Spec**: [spec.md](spec.md)
-**Status**: Reconciled to the delivered local system by T044. T046's exact-revision walkthrough and independent QA are still required before technical completion.
+**Branch**: `main` (published to https://github.com/sajjadatma/speckit) | **Date**: 2026-09-24 | **Spec**: [spec.md](spec.md)
+**Status**: Delivered and independently verified by the exact-revision walkthrough and the QA verdicts; hosted CI passes on `main`.
 
 ## Delivered Summary
 
@@ -11,14 +11,14 @@ The build artifact `apps/api/dist/openapi.json` is the runtime OpenAPI authority
 
 ## Technical Context
 
-| Area | Delivered baseline |
-| --- | --- |
-| Runtime/workspace | Node.js `24.21.0`, pnpm `11.11.0` through Corepack, TypeScript `6.0.3` strict |
-| API | NestJS `12.1.0`, Swagger `12.0.2`, config `12.0.1`, Zod `4.6.5`, Pino `10.3.1`/nestjs-pino `5.2.0` |
-| Database | PostgreSQL-compatible Prisma `7.10.0` with `@prisma/adapter-pg` `7.10.0`; no Prisma model, migration directory, migration lock, or application table |
-| Web | Next.js `16.3.6`, React `19.3.0`, Tailwind `4.3.3`, Zustand `5.0.15` retained as the constitution-mandated local-state library but deliberately not instantiated (no in-scope interaction needs it) |
-| Contract client | `@hey-api/openapi-ts` `0.99.0`, generated from `apps/api/dist/openapi.json` |
-| Verification | Node tests, Playwright `1.63.0` smoke, boundary/contract/format/type/lint/build gates, and a CI workflow configured but not executed on GitHub |
+| Area              | Delivered baseline                                                                                                                                                                                  |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Runtime/workspace | Node.js `24.21.0`, pnpm `11.11.0` through Corepack, TypeScript `6.0.3` strict                                                                                                                       |
+| API               | NestJS `12.1.0`, Swagger `12.0.2`, config `12.0.1`, Zod `4.6.5`, Pino `10.3.1`/nestjs-pino `5.2.0`                                                                                                  |
+| Database          | PostgreSQL-compatible Prisma `7.10.0` with `@prisma/adapter-pg` `7.10.0`; no Prisma model, migration directory, migration lock, or application table                                                |
+| Web               | Next.js `16.3.6`, React `19.3.0`, Tailwind `4.3.3`, Zustand `5.0.15` retained as the constitution-mandated local-state library but deliberately not instantiated (no in-scope interaction needs it) |
+| Contract client   | `@hey-api/openapi-ts` `0.99.0`, generated from `apps/api/dist/openapi.json`                                                                                                                         |
+| Verification      | Node tests, Playwright `1.63.0` smoke, boundary/contract/format/type/lint/build gates, and a CI workflow configured but not executed on GitHub                                                      |
 
 Exact resolved versions are frozen in `pnpm-lock.yaml`; this plan does not authorize a dependency or lockfile change.
 

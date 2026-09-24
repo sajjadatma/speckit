@@ -1,8 +1,8 @@
 # Feature Specification: 001 Platform Foundation
 
-**Feature Branch**: Not created (repository is not initialized as Git)
+**Feature Branch**: `main` (published to https://github.com/sajjadatma/speckit)
 **Created**: 2026-09-24
-**Status**: Reconciled against the delivered local system; final integrated walkthrough and independent QA remain pending.
+**Status**: Delivered and independently verified; evidence in `docs/verification-001.md`, `docs/verification-002-convergence.md` and `docs/qa-verdict-002-convergence.md`.
 **Input**: User's “001 Platform Foundation” brief; governed by `.specify/memory/constitution.md` v1.0.0.
 
 ## Clarifications
